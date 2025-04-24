@@ -38,8 +38,7 @@ if "`c(username)'"=="wb419055" {
 Ce dossier contient l'ensemble minimal de fichiers nécessaires pour exécuter l'outil MauSim. Pour ce faire, veuillez suivre les étapes suivantes :
 
 1. Téléchargez le dossier MauSim 2025 sur votre ordinateur.
-   [Télécharger le dossier MauSim 2025](https://www.dropbox.com/scl/fo/ss1uivnptb8ch7hrhbik2/APN6KzeB6qfibGRwi-Lb0zg?rlkey=x0lbh1j2l4h95rx2h853yjg5k&st=14idx9ah&dl=0)
-
+   
 2. Faites une copie de l'outil enregistré dans `".../03-Outputs/template/MRT_Sim_tool_VI.xlsx"` dans le dossier où vous enregistrerez vos résultats. Si ceux-ci doivent être enregistrés dans le dossier partagé, veuillez les enregistrer dans un sous-dossier avec votre nom d'utilisateur comme suit :
    `"...\03-Outputs\username/"`
 
