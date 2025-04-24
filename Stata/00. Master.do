@@ -8,10 +8,6 @@
 clear all
 macro drop _all
  
-*----- Define your directory path
-global path     	".../MauSim_Tool"
-
-
 
 *===============================================================================
 // Set Up - Parameters
@@ -26,9 +22,25 @@ if "`c(username)'"=="gabriellombomoreno" {
 	global path     	"/Users/gabriellombomoreno/Documents/WorldBank/Projects/01 MRT Fiscal Incidence Analysis/00-Public_repository/MauSim_Tool"
 }
 
+if "`c(username)'"=="wb419055" {
+	
+	*Running R or Stata folder 
+	local Software "Stata"
+	
+	*Project path. Ideally where results are going to be saved 
+	global path     	"C:\Users\wb419055\OneDrive - WBG\AWCF1 Poverty_Equity\04 MAURITANIA\PROJECTS\01 MRT Fiscal Incidence Analysis\0_Public_repository\v4.0_April_2025\"
+	
+	* Data Path. Ideally where data is being saved, drop box folder to be sure we are always using latest data but if you have connection problems you can dowload the data to your local computer
+	global pathdata     "C:\Users\wb419055\OneDrive - WBG\AWCF1 Poverty_Equity\04 MAURITANIA\PROJECTS\01 MRT Fiscal Incidence Analysis\0_Public_repository\v4.0_April_2025\01-Data"
+	
+	* DO files path: Ideally will be also saved in the projects path but Github gives the advantage of saving them wherever you want. Important: If you saved them in the folders project you need to add a subfolder within scripts 
+	global thedo     	"${path}/02-Scripts/`c(username)'/`Software'"		
+	
+	}
+
 	*version 18
 
-	* Data
+	* Data subfolders 
 	global data_sn 		"${pathdata}/MRT_2019_EPCV/Data/STATA/1_raw"
     global data_other   "${pathdata}/MRT_FIA_OTHER"
 
@@ -36,29 +48,32 @@ if "`c(username)'"=="gabriellombomoreno" {
 	global tempsim      "${path}/01-Data/3_temp_sim"
 	global data_out    	"${path}/01-Data/4_sim_output"
 
-	* Tool
-	*global tool         "${path}/03-Outputs/`c(username)'/Tool"	// 	 
-	global tool         "${path}/03-Outputs" 
-	global xls_sn 		"${tool}/MRT_Sim_tool_VI.xlsx"
+	* Output subfolders 
+	global tool         "${path}/03-Outputs/`c(username)'/"	// 	 
+	
+	
+	* global tool         "${path}/03-Outputs" 
+	* This gives flexibility that the excel of inputs and outputs to be different but is not being used right now. Right now we use the same excel file but kept the flexibility 
+	global xls_sn 		"${tool}/MRT_Sim_tool_VI.xlsx"  
 	global xls_out    	"${tool}/MRT_Sim_tool_VI.xlsx"	
 	
-	* Scripts	
+	* Script subfolders	
 	*global thedo     	"${path}/02-Scripts/`c(username)'/0-Fiscal-Model" // 	
-	global thedo     	"${path}/02-Scripts"		
 	global theado       "$thedo/ado"	
 	global thedo_pre    "$thedo/_pre_sim"
 	
 	scalar t1 = c(current_time)
 	
 	
-	// Global about the type of simulation.
-	global devmode = 1  		// Indicates if we run a developers mode of the tool.
+	* Activating intermediate steps to test the tool 
+	global devmode = 1  		// =1 if the tool is in developers mode
 								// In the developers mode all the data is being saved 
 								// in .dta files in the subfolders in 3_temp_sim 
-	global asserts_ref2018 = 0	
+	
+	global asserts_ref2018 = 0	// indicates the reference scenario is being run and therefore the validation checks are being implemented 
 	
 *===============================================================================
-// Isolate Environment
+// Installing and running packages Isolate Environment
 *===============================================================================
 
 sysdir set PLUS "${thedo}/ado"
