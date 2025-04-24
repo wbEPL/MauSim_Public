@@ -3,11 +3,10 @@
 
 This folder contains the minimum set of files required to run the MauSim tool. To do this, please follow these steps:
 
-1. Download the MauSim 2025 folder to your computer.
-   [Download MauSim 2025 Folder](https://www.dropbox.com/scl/fo/ss1uivnptb8ch7hrhbik2/APN6KzeB6qfibGRwi-Lb0zg?rlkey=x0lbh1j2l4h95rx2h853yjg5k&st=14idx9ah&dl=0)
-
+1. Download the MauSim 2025 folder shared on dropbox or one drive to your computer.
+   
 2. Make a copy of the tool saved in `".../03-Outputs/template/MRT_Sim_tool_VI.xlsx"` into the folder where you will save your outputs. If those will be saved in the shared folder, please saved them into a subfolder with your username as follows:
-   `"... ...\03-Outputs\username/"`
+   `".../03-Outputs/username/"`
 
 3. Change the desired parameters in the tool and save the scenario with a _short_ name and add the label of the scenario in the worksheet named “General Parameters”.
 
