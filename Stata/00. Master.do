@@ -8,19 +8,10 @@
 clear all
 macro drop _all
  
-
 *===============================================================================
 // Set Up - Parameters
 *===============================================================================
 
-*----- Do not modify after this line
-
-if "`c(username)'"=="gabriellombomoreno" {
-	
-	*global pathdata     "/Users/gabriellombomoreno/Documents/WorldBank/Data/DATA_MRT"
-	*global path     	"/Users/gabriellombomoreno/Documents/WorldBank/Projects/01 MRT Fiscal Incidence Analysis"
-	global path     	"/Users/gabriellombomoreno/Documents/WorldBank/Projects/01 MRT Fiscal Incidence Analysis/00-Public_repository/MauSim_Tool"
-}
 
 if "`c(username)'"=="wb419055" {
 	
@@ -37,6 +28,17 @@ if "`c(username)'"=="wb419055" {
 	global thedo     	"${path}/02-Scripts/`c(username)'/`Software'"		
 	
 	}
+
+
+if "`c(username)'"=="gabriellombomoreno" {
+	local Software "Stata"
+	global path     	"/Users/gabriellombomoreno/Dropbox/WorldBank/MauSim_Tool"
+	*global pathdata     "/Users/gabriellombomoreno/Documents/WorldBank/Data/DATA_MRT"
+	global thedo     	"${path}/02-Scripts/`c(username)'/`Software'"		
+}	
+	
+	
+*----- Do not modify after this line
 
 	*version 18
 
@@ -58,7 +60,6 @@ if "`c(username)'"=="wb419055" {
 	global xls_out    	"${tool}/MRT_Sim_tool_VI.xlsx"	
 	
 	* Script subfolders	
-	*global thedo     	"${path}/02-Scripts/`c(username)'/0-Fiscal-Model" // 	
 	global theado       "$thedo/ado"	
 	global thedo_pre    "$thedo/_pre_sim"
 	
@@ -87,6 +88,7 @@ foreach command of local user_commands {
 		ssc install `command'
 	}
 }
+
 	
 *===============================================================================
 // Run ado files
