@@ -35,24 +35,30 @@ foreach payment in 0 1 {
 		
 	if "`payment'"=="1" local tpay "W"			// Prepaid (Woyofal)
 	else if "`payment'"=="0" local tpay "P"		// Postpaid
-
+	
 	foreach pui in DPP DMP DGP{
 		if ("`pui'"=="DPP") local client=1
 		if ("`pui'"=="DMP") local client=2
-		if ("`pui'"=="DGP") local client=3
+		if ("`pui'"=="DGP") local client=3		
 		if strlen(`"$tholdsElec`tpay'`pui'"')>0{ //This should skip those cases where the combination puissance*payment does not exist (basically WDGP)
 			local i=0
 			global MaxT0_`tpay'`pui' 0 //This "tranche 0" is helpful for the next loops
+						
 			foreach tranch in ${tholdsElec`tpay'`pui'}{
 				local j = `i'+1
 				replace tranche`j'_tool=${Max`tranch'_`tpay'`pui'}-${MaxT`i'_`tpay'`pui'} if consumption_electricite>=${Max`tranch'_`tpay'`pui'} & type_client==`client' & prepaid_woyofal==`payment'
 				replace tranche`j'_tool=consumption_electricite-${MaxT`i'_`tpay'`pui'} if consumption_electricite<${Max`tranch'_`tpay'`pui'} & consumption_electricite>${MaxT`i'_`tpay'`pui'} & type_client==`client' & prepaid_woyofal==`payment'
 				local ++i
+
 				dis "`pui' households, prepaid=`payment', tranche `i'"
+				
+
 			}
 		}
 	}
 }
+
+di 
 
 forval i=1/7{
 	replace tranche`i'_tool=0 if tranche`i'_tool==. & prepaid_woyofal!=.	

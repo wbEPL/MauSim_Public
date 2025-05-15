@@ -24,6 +24,14 @@ global sheet6 "Params_tranches_2_raw"
 *===============================================================================
 *Two formats to read parameters, from csv files not linked to the excel sheet or from the clean excel sheet. The doe below should be run only once to create the csv files for R-Shinny developers
 
+
+	import excel "$xls_sn", sheet("p_MRT_Ref_2019") first clear
+
+	
+	
+	
+	
+
 if "$devmode" == "1" {
 
 	// General parameters
@@ -232,16 +240,21 @@ foreach t of local types {
 	7. Parameters by Tranches - Electricity Subsidies
 /-------------------------------------------------------*/
 
-import excel "$xls_sn", sheet("$sheet6") first clear
-/*import delimited "$pathdata/2_pre_sim/csv_policies/$sheet6", clear 	
+*import excel "$xls_sn", sheet("$sheet6") first clear
+
+import delimited "$pathdata/2_pre_sim/csv_policies/$sheet6", clear 	
 *cap drop if Tariff=="."
-*cap drop if Tariff==.
-*cap rename  type Type
-*cap rename threshold Threshold  
-*cap rename max Max
-*cap rename subvention Subvention
-*cap rename tariff Tariff
-*/
+
+cap drop if tariff == .
+cap rename  type Type
+cap rename threshold Threshold  
+cap rename max Max
+cap rename subvention Subvention
+cap rename tariff Tariff
+
+
+*import excel "$xls_sn", sheet("$sheet6") first clear
+*cap drop if Tariff=="."
 
 
 levelsof Type, local(types)
@@ -257,12 +270,12 @@ foreach t of local types {
 		levelsof Subvention  if Threshold=="`z'" & Type=="`t'", local(Subvention`z') 
 		global Subvention`z'_`t' `Subvention`z''
 			
-			dis "Subvention`z'_`t'"
-			
-			
-			dsadsadsa
 		levelsof Tariff  if Threshold=="`z'" & Type=="`t'", local(Tariff`z') 
 		global Tariff`z'_`t' `Tariff`z''
 	}
 }
+
+
+global c:all globals
+macro list c
 

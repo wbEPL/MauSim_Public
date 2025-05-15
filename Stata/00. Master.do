@@ -31,9 +31,9 @@ if "`c(username)'"=="wb419055" {
 
 
 if "`c(username)'"=="gabriellombomoreno" {
-	local Software "Stata"
+	local Software 		"Stata"
 	global path     	"/Users/gabriellombomoreno/Dropbox/WorldBank/MauSim_Tool"
-	*global pathdata     "/Users/gabriellombomoreno/Documents/WorldBank/Data/DATA_MRT"
+	global pathdata     "/Users/gabriellombomoreno/Dropbox/WorldBank/MauSim_Tool/01-Data/"
 	global thedo     	"${path}/02-Scripts/`c(username)'/`Software'"		
 }	
 	
@@ -89,7 +89,7 @@ foreach command of local user_commands {
 	}
 }
 
-	
+	hasb
 *===============================================================================
 // Run ado files
 *===============================================================================
