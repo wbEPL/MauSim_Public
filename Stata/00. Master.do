@@ -37,6 +37,8 @@ if "`c(username)'"=="gabriellombomoreno" {
 	global thedo     	"${path}/02-Scripts/`c(username)'/`Software'"		
 }	
 	
+
+	
 	
 *----- Do not modify after this line
 
@@ -73,6 +75,16 @@ if "`c(username)'"=="gabriellombomoreno" {
 	
 	global asserts_ref2018 = 0	// indicates the reference scenario is being run and therefore the validation checks are being implemented 
 	
+	
+	* Paramaters to read the parameters of an aready in the tool scenario 
+	global csv_file = 0			// Rewrite csv file with parameters scenario 
+	global scenario_name_load = "MRT_Ref_2019" // Scenario to rewrite the parameters
+	global scenario_name_save = "Test2"		// New name
+	
+	global save_scenario = 1
+	global load_scenario = 0
+	global sheetname $scenario_name_save	
+	
 *===============================================================================
 // Installing and running packages Isolate Environment
 *===============================================================================
@@ -89,7 +101,7 @@ foreach command of local user_commands {
 	}
 }
 
-	hasb
+
 *===============================================================================
 // Run ado files
 *===============================================================================
