@@ -22,13 +22,45 @@ global sheet6 "Params_tranches_2_raw"
 *===============================================================================
 // Read Parameters
 *===============================================================================
+*Two formats to read parameters, from csv files not linked to the excel sheet or from the clean excel sheet. The doe below should be run only once to create the csv files for R-Shinny developers
+
+if "$devmode" == "1" {
+
+	// General parameters
+	import excel "$xls_sn", sheet("$sheet2") first clear
+	cap export delimited "$pathdata/2_pre_sim/csv_policies/$sheet2", replace 
+
+	// Region level parameters
+	import excel "$xls_sn", sheet("$sheet3") first clear
+	cap export delimited "$pathdata/2_pre_sim/csv_policies/$sheet3", replace 
+	
+	//Product level parameters
+	import excel "$xls_sn", sheet("$sheet4") first clear
+	cap export delimited "$pathdata/2_pre_sim/csv_policies/$sheet4", replace 
+	
+	// PIT tranches
+	import excel "$xls_sn", sheet("$sheet5") first clear
+	cap export delimited "$pathdata/2_pre_sim/csv_policies/$sheet5", replace 
+	
+	// Energy tranches
+	import excel "$xls_sn", sheet("$sheet6") first clear
+	cap export delimited "$pathdata/2_pre_sim/csv_policies/$sheet6", replace 
+
+}
+
+
+
+
+
 
 /*-------------------------------------------------------/
 	1. Policy Names
 /-------------------------------------------------------*/
 
 *------ Policy
+
 import excel "$xls_sn", sheet("$sheet1") firstrow clear
+
 
 keep if varname != "."
 
@@ -74,8 +106,8 @@ foreach z of local params {
 /-------------------------------------------------------*/
 
 *------ Settings
-import excel "$xls_sn", sheet("$sheet2") first clear
-
+//import excel "$xls_sn", sheet("$sheet2") first clear
+import delimited "$pathdata/2_pre_sim/csv_policies/$sheet2", clear 
 levelsof globalname, local(params)
 foreach z of local params {
 	levelsof globalvalue if globalname == "`z'", local(val)
@@ -88,8 +120,9 @@ foreach z of local params {
 	
 forvalues i = 1/ $n_progs {
 
-	import excel "$xls_sn", sheet("$sheet3") first clear	
-		
+	*import excel "$xls_sn", sheet("$sheet3") first clear	
+	import delimited "$pathdata/2_pre_sim/csv_policies/$sheet3", clear 
+	
 	if "${pr_div_`i'}" == "departement"  | "${pr_div_`i'}" == "region"  {
 		
 		drop if location ==.				
@@ -128,7 +161,8 @@ forvalues i = 1/ $n_progs {
 	5. Parameters by product
 /-------------------------------------------------------*/
 	
-import excel "$xls_sn", sheet("${sheet4}") first clear
+*import excel "$xls_sn", sheet("${sheet4}") first clear
+import delimited "$pathdata/2_pre_sim/csv_policies/$sheet4", clear 
 
 levelsof codpr, local(products)
 global products "`products'"
@@ -159,9 +193,10 @@ foreach z of local params {
 	6. Parameters by Tranches - Direct Taxes
 /-------------------------------------------------------*/
 	
-import excel "$xls_sn", sheet("$sheet5") first clear
-	
-drop if rate == "."
+*import excel "$xls_sn", sheet("$sheet5") first clear
+import delimited "$pathdata/2_pre_sim/csv_policies/$sheet5", clear 	
+cap drop if rate == "."
+cap drop if rate == .
 destring rate min max plus, replace
 		
 gen pol_name = name + "_" + regime	
@@ -198,8 +233,16 @@ foreach t of local types {
 /-------------------------------------------------------*/
 
 import excel "$xls_sn", sheet("$sheet6") first clear
-	
-drop if Tariff=="."
+/*import delimited "$pathdata/2_pre_sim/csv_policies/$sheet6", clear 	
+*cap drop if Tariff=="."
+*cap drop if Tariff==.
+*cap rename  type Type
+*cap rename threshold Threshold  
+*cap rename max Max
+*cap rename subvention Subvention
+*cap rename tariff Tariff
+*/
+
 
 levelsof Type, local(types)
 global typesElec "`types'"
@@ -214,11 +257,12 @@ foreach t of local types {
 		levelsof Subvention  if Threshold=="`z'" & Type=="`t'", local(Subvention`z') 
 		global Subvention`z'_`t' `Subvention`z''
 			
+			dis "Subvention`z'_`t'"
+			
+			
+			dsadsadsa
 		levelsof Tariff  if Threshold=="`z'" & Type=="`t'", local(Tariff`z') 
 		global Tariff`z'_`t' `Tariff`z''
 	}
 }
-
-	
-
 

@@ -19,10 +19,10 @@ if "`c(username)'"=="wb419055" {
 	local Software "Stata"
 	
 	*Project path: where results are going to be saved 
-	global path     	"C:\Users\wb419055\OneDrive - WBG\AWCF1_Poverty_Equity - WB Group - AWCF1 Poverty_Equity\04 MAURITANIA\PROJECTS\01 MRT Fiscal Incidence Analysis\00-Public_repository\MauSim-1.0\"
+	global path     	"C:\Users\wb419055\OneDrive - WBG\AWCF1\04 MAURITANIA\PROJECTS\01 MRT Fiscal\00-Public_repository\MauSim-1.0\"
 	
 	* Data Path: where raw data is being saved, It could be the drop box or one drive folder to be sure we are always using latest data but if you have connection problems you can dowload the data to your local computer
-	global pathdata     "C:\Users\wb419055\OneDrive - WBG\AWCF1_Poverty_Equity - WB Group - AWCF1 Poverty_Equity\04 MAURITANIA\PROJECTS\01 MRT Fiscal Incidence Analysis\00-Public_repository\MauSim-1.0\01-Data"
+	global pathdata     "C:\Users\wb419055\OneDrive - WBG\AWCF1\04 MAURITANIA\PROJECTS\01 MRT Fiscal\00-Public_repository\MauSim-1.0\01-Data"
 	
 	* DO files path: Ideally will be also saved in the projects path but Github gives the advantage of saving them wherever you want. Important: If you saved them in the folders project you need to add a subfolder within scripts 
 	global thedo     	"${path}/02-Scripts/`c(username)'/`Software'"		
@@ -146,7 +146,7 @@ if (1) qui: do "${thedo}/04. Indirect Taxes - Custom Duties.do"
 // 05. P5 - Indirect Subsidies
 *-------------------------------------
 
-if (1) qui: do "${thedo}/05. Indirect Subsidies.do" 
+if (1) do "${thedo}/05. Indirect Subsidies.do" 
 
 *-------------------------------------
 // 06. P4 - Indirect Taxes - Excises 

@@ -97,6 +97,7 @@ label var income_tax_3 "Property Tax"
 
 if $devmode== 1 {
     save "$tempsim/income_tax_collapse.dta", replace
+	save "$tempsim/income_tax_collapse_R.dta", replace
 }
 
 tempfile income_tax_collapse
