@@ -12,7 +12,6 @@ macro drop _all
 // Set Up - Parameters
 *===============================================================================
 
-
 if "`c(username)'"=="wb419055" {
 	
 	*Running R or Stata folder 
@@ -38,8 +37,6 @@ if "`c(username)'"=="gabriellombomoreno" {
 }	
 	
 
-	
-	
 *----- Do not modify after this line
 
 	*version 18
@@ -76,14 +73,15 @@ if "`c(username)'"=="gabriellombomoreno" {
 	global asserts_ref2018 = 0	// indicates the reference scenario is being run and therefore the validation checks are being implemented 
 	
 	
-	* Paramaters to read the parameters of an aready in the tool scenario 
-	global csv_file = 0			// Rewrite csv file with parameters scenario 
-	global scenario_name_load = "MRT_Ref_2019" // Scenario to rewrite the parameters
-	global scenario_name_save = "Test2"		// New name
+	* Paramaters to read the parameters of an csv file already produced 
+	global csv_file = 1							// Rewrite csv file with parameters scenario 
+	global scenario_name_load = "MRT_Ref_2019" 	// Scenario to rewrite the parameters
+	global scenario_name_save = "TestDV"		// New name
 	
 	global save_scenario = 1
 	global load_scenario = 0
 	global sheetname $scenario_name_save	
+	
 	
 *===============================================================================
 // Installing and running packages Isolate Environment
@@ -128,13 +126,13 @@ if (0) qui: do "${thedo_pre}/00. Master - Presim.do"
 
 if (0) qui: do "${thedo}/00a. Dictionary.do"
 
-if (1) qui: do "${thedo}/00b. Pullglobals.do"
+if (1)  do "${thedo}/00b. Pullglobals.do"
 
 *-------------------------------------
 // 01. P1 - Direct Taxes
 *-------------------------------------
 
-if (1) qui: do "${thedo}/01. Direct Taxes - Income Tax.do" 
+if (1) do "${thedo}/01. Direct Taxes - Income Tax.do" 
 
 *-------------------------------------
 // 02. P2 - Social Security Contributions
@@ -195,6 +193,14 @@ if (0) qui: do "${thedo}/10. Outputs - Figures.do"
 
 if "`sce_debug'"=="yes" dis as error  ///
 	"You have not turned off the debugging phase in ind tax dofile !!!"
+
+
+*-------------------------------------
+// 08. Cross-validation 
+*-------------------------------------
+
+if (1) qui: do "${thedo}/11. VAlidation.do" 
+
 
 
 *===============================================================================
