@@ -187,6 +187,7 @@ if (1) qui: do "${thedo}/09. Income Aggregates.do"
 *-------------------------------------
 
 if (1) qui: do "${thedo}/10. Outputs - Tool.do" 
+if (1) qui: do "${thedo}/10. Outputs - R-Shinny.do" 
 
 if (0) qui: do "${thedo}/10. Outputs - Figures.do" 
 
