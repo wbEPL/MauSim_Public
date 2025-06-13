@@ -76,7 +76,7 @@ if "`c(username)'"=="gabriellombomoreno" {
 	* Paramaters to read the parameters of an csv file already produced 
 	global csv_file = 1							// Rewrite csv file with parameters scenario 
 	global scenario_name_load = "MRT_Ref_2019" 	// Scenario to rewrite the parameters
-	global scenario_name_save = "TestDV"		// New name
+	global scenario_name_save = "Test3"		// New name
 	
 	global save_scenario = 1
 	global load_scenario = 0
@@ -186,7 +186,8 @@ if (1) qui: do "${thedo}/09. Income Aggregates.do"
 // 07. Process outputs
 *-------------------------------------
 
-if (1) qui: do "${thedo}/10. Outputs - Tool.do" 
+if (0) qui: do "${thedo}/10. Outputs - Tool.do" 
+
 if (1) qui: do "${thedo}/10. Outputs - R-Shinny.do" 
 
 if (0) qui: do "${thedo}/10. Outputs - Figures.do" 
@@ -200,7 +201,7 @@ if "`sce_debug'"=="yes" dis as error  ///
 // 08. Cross-validation 
 *-------------------------------------
 
-if (1) qui: do "${thedo}/11. VAlidation.do" 
+if (0) qui: do "${thedo}/11. Validation.do" 
 
 
 

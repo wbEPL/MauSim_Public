@@ -17,6 +17,7 @@ Version 2.
 Pendent : 
 _---------------------------------------------------------------------------------*/
 
+
 if $save_scenario == 1 {	
 	global sheetname "${scenario_name_save}"
 }
