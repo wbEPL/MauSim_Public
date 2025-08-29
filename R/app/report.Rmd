@@ -1,0 +1,160 @@
+---
+# title: "Fiscal Incidence Analysis Report"
+# author:
+# - SEN CMU
+# date: "`r format(Sys.time(), '%d-%m-%Y')`"
+output:
+  pdf_document:
+    keep_tex: yes
+    number_sections: no
+    fig_caption: yes
+    highlight: tango
+  word_document: default
+  html_document:
+    df_print: paged
+header-includes:
+    - \usepackage{eso-pic,graphicx,transparent}
+    - \usepackage{fancyhdr}
+    - \usepackage{caption}
+    - \usepackage{booktabs}
+    - \usepackage[spanish]{babel}
+    - \captionsetup[table]{name=Tabla}
+    - \captionsetup[figure]{name=Figura}
+    - \usepackage[utf8]{inputenc}
+    - \usepackage{hyperref}
+    - \usepackage{fancyhdr}
+    - \pagestyle{fancy}
+    - \usepackage{float}
+    - \floatplacement{figure}{H}
+tables: yes
+params:
+  n: NA
+  tab: NA
+  tab_all: NA
+  indicator: NA
+  lab: NA
+  comparison: NA
+  # scenario: NA
+---
+
+```{r setup, echo = FALSE, include = FALSE}
+require(pacman)
+p_load(dplyr, here, argparse, imager)
+
+path <- here::here()
+
+parser  <- ArgumentParser()
+
+parser$add_argument("--metadata", default = paste0(path, "/test/src/images"))
+
+args <- parser$parse_args()
+
+params$n
+params$tab
+params$tab_all
+params$indicator
+params$lab
+params$comparison
+# params$scenario
+
+lab_comparison = ifelse(params$comparison == 1, "policy",
+                        ifelse(params$comparison == 2, "scenario",
+                               "scenario and policy"))
+
+
+```
+
+
+```{r, echo=FALSE, results='asis'}
+cat("\\twocolumn")
+```
+
+# Mauritania
+
+Saved on `r format(Sys.time(), '%d-%m-%Y')`
+
+*The Fiscal Incidence Analysis uses the Commitment to Equity (CEQ) methodology to expand on the distributional impacts of policies while using micro-simulation for prospective policy implications.*
+
+
+## Results by `r lab_comparison`
+
+```{r tab, echo = FALSE}
+
+      # Labels
+      title = params$indicator
+
+      subtitle = as.character(params$lab %>%
+                                filter(indicator == params$indicator) %>%
+                                filter(variable == "subtitle") %>%
+                                select("label_en"))
+      ylab = as.character(params$lab %>%
+                            filter(indicator == params$indicator) %>%
+                            filter(variable == "ylab") %>%
+                            select("label_en"))
+      xlab = as.character(params$lab %>%
+                            filter(indicator == params$indicator) %>%
+                            filter(variable == "xlab") %>%
+                            select("label_en"))
+      caption = as.character(params$lab %>%
+                               filter(indicator == params$indicator) %>%
+                               filter(variable == "caption") %>%
+                               select("label_en"))
+      
+      if (params$comparison == 1) {
+
+        params$tab %>%
+          ggplot(aes(x = as.factor(measure), y = value, fill = names)) + 
+          geom_bar(stat = "identity", position = position_dodge()) + 
+          theme_bw() + scale_fill_brewer(palette = "Paired") +
+          labs(title = title, subtitle = subtitle,
+               caption = caption) + xlab(xlab) + ylab(ylab) +
+          theme(
+            plot.title = element_text(size = 16),
+            axis.title.x = element_text(size = 12),
+            axis.title.y = element_text(size = 12),
+            plot.caption = element_text(size = 12)
+            )
+      }
+      
+      if (params$comparison == 2) {
+        
+        params$tab %>%
+          ggplot(aes(x = as.factor(measure), y = value, fill = scenario)) + 
+          geom_bar(stat = "identity", position = position_dodge()) + 
+          theme_bw() + scale_fill_brewer(palette = "Paired") +
+          labs(title = title, subtitle = subtitle,
+               caption = caption) + xlab(xlab) + ylab(ylab) +
+          theme(
+            plot.title = element_text(size = 16),
+            axis.title.x = element_text(size = 12),
+            axis.title.y = element_text(size = 12),
+            plot.caption = element_text(size = 12)
+          )
+      }
+      
+      if (params$comparison == 3) {
+        
+        params$tab %>%
+          ggplot(aes(x = as.factor(measure), y = value, fill = scenario)) + 
+          geom_bar(stat = "identity", position = position_dodge()) + 
+          facet_wrap(~names, ncol = 1) +
+          theme_bw() + scale_fill_brewer(palette = "Paired") +
+          labs(title = title, subtitle = subtitle,
+               caption = caption) + xlab(xlab) + ylab(ylab) +
+          theme(
+            plot.title = element_text(size = 16),
+            axis.title.x = element_text(size = 12),
+            axis.title.y = element_text(size = 12),
+            plot.caption = element_text(size = 12)
+          )
+      }
+      
+      
+      
+
+
+
+```
+
+You downloaded `r params$n` figures.
+
